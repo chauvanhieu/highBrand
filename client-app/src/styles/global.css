@@ -1,0 +1,36 @@
+a {
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+}
+a:hover {
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+}
+.card-name {
+  color: rgb(207, 69, 69);
+  font-weight: bold;
+}
+.card-description {
+  color: black;
+}
+
+.card-price {
+  color: red;
+}
+
+/* CSS shopping cart */
+.gradient-custom {
+  background: #6a11cb;
+
+  background: -webkit-linear-gradient(
+    to right,
+    rgba(106, 17, 203, 1),
+    rgba(37, 117, 252, 1)
+  );
+
+  background: linear-gradient(
+    to right,
+    rgba(106, 17, 203, 1),
+    rgba(37, 117, 252, 1)
+  );
+}

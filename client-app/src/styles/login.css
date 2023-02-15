@@ -1,0 +1,31 @@
+.row {
+  background: #007bff;
+  background: linear-gradient(to right, #3780e1, #6aa5f1);
+}
+
+.sig {
+  min-height: 100%;
+}
+.card-img-left {
+  width: 45%;
+  /* Link to your background image using in the property below! */
+  background: scroll center
+    url("https://cdn.fbsbx.com/v/t59.2708-21/271848057_627437141799084_2717744943422032922_n.gif?_nc_cat=110&ccb=1-7&_nc_sid=041f46&_nc_ohc=dv757e7u888AX_pmje-&_nc_ht=cdn.fbsbx.com&oh=03_AdS3cS7BAujJd0khUCV92lsWGTYAdv44dT9IuI2XAGxVCQ&oe=63EB24C3");
+  background-size: cover;
+}
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+}
+
+.btn-google {
+  color: white;
+  background-color: #ea4335;
+}
+
+.btn-facebook {
+  color: white;
+  background-color: #3b5998;
+}
