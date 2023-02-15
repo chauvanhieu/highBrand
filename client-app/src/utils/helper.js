@@ -1,5 +1,4 @@
 import axios from "axios";
-
 class helper {
   static removeAscent(str) {
     if (str === null || str === undefined) return str;

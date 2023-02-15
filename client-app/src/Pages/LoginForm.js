@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import helper from "../utils/helper";
@@ -13,6 +13,7 @@ import {
 } from "mdb-react-ui-kit";
 
 function LoginForm() {
+  const [loadImg, setLoadImg] = useState("");
   const navigate = useNavigate();
   const [justifyActive, setJustifyActive] = useState("tab1");
   const [message, setMessage] = useState("");
@@ -80,6 +81,7 @@ function LoginForm() {
   }
 
   async function handleLoginClick() {
+    setLoadImg("https://thegioixedien.com.vn/images/loading2.gif");
     const res = await axios.post("http://localhost:4000/login", {
       email: email,
       password: password,
@@ -158,6 +160,10 @@ function LoginForm() {
             >
               Trở về trang chủ
             </button>
+          </center>
+
+          <center>
+            <img src={loadImg} alt="" />
           </center>
         </MDBTabsPane>
 

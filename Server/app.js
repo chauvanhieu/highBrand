@@ -9,6 +9,7 @@ const loginRouter = require("./routes/login");
 const userRouter = require("./routes/users");
 const productRouter = require("./routes/products");
 const postRouter = require("./routes/posts");
+const bannerRouter = require("./routes/banner");
 const orderForUserRouter = require("./routes/orderForUser");
 const categoryRouter = require("./routes/category");
 const orderRouter = require("./routes/order");
@@ -28,6 +29,7 @@ app.use(function (req, res, next) {
 //setup router
 
 app.use("/user", cors(), userRouter);
+app.use("/banner", cors(), bannerRouter);
 app.use("/product", cors(), productRouter);
 app.use("/post", cors(), postRouter);
 app.use("/order", cors(), orderRouter);
@@ -45,7 +47,15 @@ app.post("/signin", cors(), (req, res) => {
     res.json(user);
   });
 });
-
+app.get("/total-product", cors(), (req, res) => {
+  let sql = `SELECT count(*) as 'total' FROM products`;
+  con.query(sql, (err, rs) => {
+    if (err) {
+      return res.send(err);
+    }
+    res.json(rs[0]);
+  });
+});
 app.listen(4000, () => {
   console.log(
     "SERVER ĐANG CHẠY, CHÚC MAY MẮN................................................................"

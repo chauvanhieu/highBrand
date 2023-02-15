@@ -19,7 +19,6 @@ function ShoppingCart() {
     } else {
       gioHang = [];
     }
-    console.log("Giỏ hàng:", gioHang);
     for (let i = 0; i < gioHang.length; i++) {
       if (gioHang[i].id === id) {
         gioHang[i].quantity++;
@@ -37,7 +36,6 @@ function ShoppingCart() {
     } else {
       gioHang = [];
     }
-    console.log("Giỏ hàng:", gioHang);
 
     for (let i = 0; i < gioHang.length; i++) {
       if (gioHang[i].id === id) {
@@ -62,6 +60,7 @@ function ShoppingCart() {
   }, []);
   function reloadCart() {
     setCart(JSON.parse(localStorage.getItem("shoppingCart")));
+    helper.setGioHangTam(JSON.parse(localStorage.getItem("user")).id);
   }
   return (
     <section className="h-100 gradient-custom m-5">
@@ -88,10 +87,11 @@ function ShoppingCart() {
                         </div>
                       </div>
                       <div className="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                        <p>
+                        <h3>
                           <strong>{item.name}</strong>
-                        </p>
-                        <p>{item.description}...</p>
+                        </h3>
+                        <h5>{item.price.toLocaleString()} vnđ</h5>
+                        <p>{item.description.slice(0, 100)}...</p>
                       </div>
                       <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
                         <div className="d-flex mb-4" style={{ maxWidth: 300 }}>

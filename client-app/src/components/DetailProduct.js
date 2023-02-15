@@ -1,16 +1,29 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import helper from "../utils/helper";
+import Alert from "react-bootstrap/Alert";
+
 function DetailProduct() {
+  let navigate = useNavigate();
   let { id } = useParams();
-  let [product, setProduct] = useState();
+  const [message, setMessage] = useState();
+  let [product, setProduct] = useState("");
   useEffect(() => {
     getProduct();
   }, []);
 
   function addToCart() {
+    if (!JSON.parse(localStorage.getItem("user"))) {
+      alert("Quý khách hàng vui lòng đăng nhập để mua hàng !");
+      navigate("/login");
+      return;
+    }
     helper.addToCart(product, JSON.parse(localStorage.getItem("user")).id);
+    setMessage("Đã thêm vào giỏ hàng");
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
   }
 
   async function getProduct() {
@@ -37,7 +50,6 @@ function DetailProduct() {
             style={{
               fontSize: 50,
               color: "Highlight",
-              marginBottom: 30,
             }}
           >
             {product.name}
@@ -54,6 +66,7 @@ function DetailProduct() {
             style={{
               fontSize: 25,
               color: "red",
+              marginTop: 80,
             }}
           >
             Giá : {product.price.toLocaleString()} vnđ
@@ -61,6 +74,15 @@ function DetailProduct() {
           <button onClick={addToCart} className="btn btn-primary">
             Thêm vào giỏ hàng
           </button>
+          {message ? (
+            <Alert
+              style={{ width: "15rem", textAlign: "center", marginTop: 10 }}
+            >
+              {message}
+            </Alert>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     );

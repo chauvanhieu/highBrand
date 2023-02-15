@@ -34,3 +34,13 @@ a:hover {
     rgba(37, 117, 252, 1)
   );
 }
+
+.pagination {
+  width: 100vw;
+}
+.item-center {
+  margin: 0 auto;
+  width: max-content;
+  padding: 30px;
+  font-weight: bold;
+}

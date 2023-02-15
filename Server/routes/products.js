@@ -17,7 +17,7 @@ router.get("/:id", function (req, res) {
 
 // GET products
 router.get("/", function (req, res) {
-  let sql = `select * from products`;
+  let sql = `select *,(select count(*) from products) as total from products`;
   const keyword = req.query.q;
   const sortColumn = req.query._sort || "id";
   const sortOrder = req.query._order || "asc";

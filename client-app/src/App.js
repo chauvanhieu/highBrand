@@ -11,9 +11,6 @@ import CartPage from "./Pages/CartPage";
 import ProductCategoryPage from "./Pages/ProductCategoryPage";
 
 function App() {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-  console.log("user", user);
-
   return (
     <div className="App container">
       <Routes>
