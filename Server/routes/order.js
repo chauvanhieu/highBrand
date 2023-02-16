@@ -61,16 +61,20 @@ router.post("/", function (req, res) {
 router.get("/:id", function (req, res) {
   let order = {};
   let idOrder = 0;
-  let sql = `SELECT * FROM orders WHERE id=${req.params.id}`;
+  let sql = `SELECT orders.id as 'id' ,users.email,users.address,users.soDienThoai,users.username as 'username' ,users.id as 'idUser',orders.createdAt as 'createdAt',totalPrice, isPay  FROM orders  join users on orders.iduser=users.id WHERE orders.id=${req.params.id}`;
   con.query(sql, (err, results) => {
     if (err) {
-      return res.send(err.code);
+      return res.send(err);
     }
     if (results.length > 0) {
       idOrder += results[0].id;
       order = {
         id: results[0].id,
-        idUser: results[0].iduser,
+        username: results[0].username,
+        address: results[0].address,
+        email: results[0].email,
+        soDienThoai: results[0].soDienThoai,
+        idUser: results[0].idUser,
         createdAt: results[0].createdAt,
         totalPrice: parseInt(results[0].totalPrice),
         isPay: results[0].isPay === 0 ? false : true,
@@ -78,6 +82,7 @@ router.get("/:id", function (req, res) {
       };
 
       let sqlGetDetailOrder = `SELECT products.id,products.name,products.price,products.image,orderdetail.quantity from orderdetail join products on products.id=orderdetail.idproduct WHERE orderdetail.status=1 and orderdetail.idorder = ${idOrder}`;
+      console.log(sqlGetDetailOrder);
       con.query(sqlGetDetailOrder, (err, results) => {
         if (err) {
           return res.send(err);

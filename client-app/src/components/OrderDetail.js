@@ -24,7 +24,6 @@ export default function OrderDetail() {
   }, []);
   async function getOrder() {
     const res = await axios.get("http://localhost:4000/order/" + id);
-    console.log(res.data);
     setOrder(res.data);
   }
   return (
@@ -54,62 +53,77 @@ export default function OrderDetail() {
 
                   <MDBCard className="shadow-0 border mb-4">
                     <MDBCardBody>
-                      <MDBRow>
-                        <MDBCol md="2">
-                          <MDBCardImage
-                            src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp"
-                            fluid
-                            alt="Phone"
-                          />
-                        </MDBCol>
-                        <MDBCol
-                          md="2"
-                          className="text-center d-flex justify-content-center align-items-center"
-                        >
-                          <p className="text-muted mb-0">Samsung Galaxy</p>
-                        </MDBCol>
-                        <MDBCol
-                          md="2"
-                          className="text-center d-flex justify-content-center align-items-center"
-                        ></MDBCol>
-                        <MDBCol
-                          md="2"
-                          className="text-center d-flex justify-content-center align-items-center"
-                        >
-                          <p className="text-muted mb-0 small">Đơn giá: 64GB</p>
-                        </MDBCol>
-                        <MDBCol
-                          md="2"
-                          className="text-center d-flex justify-content-center align-items-center"
-                        >
-                          <p className="text-muted mb-0 small">Số lượng: 1</p>
-                        </MDBCol>
-                        <MDBCol
-                          md="2"
-                          className="text-center d-flex justify-content-center align-items-center"
-                        >
-                          <p className="text-muted mb-0 small">$499</p>
-                        </MDBCol>
-                      </MDBRow>
+                      {order.details?.map((item) => {
+                        return (
+                          <MDBRow>
+                            <MDBCol md="2">
+                              <MDBCardImage
+                                src={item.image}
+                                fluid
+                                alt="Phone"
+                              />
+                            </MDBCol>
+                            <MDBCol
+                              md="2"
+                              className="text-center d-flex justify-content-center align-items-center"
+                            >
+                              <p className="text-muted mb-0">{item.name}</p>
+                            </MDBCol>
+                            <MDBCol
+                              md="1"
+                              className="text-center d-flex justify-content-center align-items-center"
+                            ></MDBCol>
+                            <MDBCol
+                              md="3"
+                              className="text-center d-flex justify-content-center align-items-center"
+                            >
+                              <p className="text-muted mb-0 small">
+                                Đơn giá: {item.price.toLocaleString()} vnđ
+                              </p>
+                            </MDBCol>
+                            <MDBCol
+                              md="2"
+                              className="text-center d-flex justify-content-center align-items-center"
+                            >
+                              <p className="text-muted mb-0 small">
+                                Số lượng: {item.quantity}
+                              </p>
+                            </MDBCol>
+                            <MDBCol
+                              md="2"
+                              className="text-center d-flex justify-content-center align-items-center"
+                            >
+                              <p className="text-muted mb-0 small">
+                                {(item.quantity * item.price).toLocaleString()}{" "}
+                                vnđ
+                              </p>
+                            </MDBCol>
+                          </MDBRow>
+                        );
+                      })}
                     </MDBCardBody>
                   </MDBCard>
 
                   <div className="d-flex justify-content-between pt-2">
-                    <p className="fw-bold mb-0">Khách hàng : {}</p>
+                    <p className="fw-bold mb-0">
+                      Khách hàng : {order.username}
+                    </p>
                   </div>
 
                   <div className="d-flex justify-content-between pt-2">
-                    <p className="text-muted mb-0">Số điện thoại : 788152</p>
+                    <p className="text-muted mb-0">
+                      Số điện thoại : {order.soDienThoai}
+                    </p>
                   </div>
 
                   <div className="d-flex justify-content-between">
-                    <p className="text-muted mb-0">Địa chỉ : 22 Dec,2019</p>
+                    <p className="text-muted mb-0">Địa chỉ : {order.address}</p>
                   </div>
 
                   <div className="d-flex justify-content-between mb-5">
-                    <p className="text-muted mb-0">Email : 18KU-62IIK</p>
+                    <p className="text-muted mb-0">Email : {order.email}</p>
                   </div>
-                  <Form.Select className="col-3">
+                  <Form.Select className="col-3" value={order.isPay ? 1 : 0}>
                     <option
                       value={1}
                       style={{

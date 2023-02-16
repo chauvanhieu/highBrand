@@ -1,6 +1,6 @@
 
 
-GET http://localhost:4000/order?_page=2&_limit=12&_sort=createdAt&_order=desc HTTP/1.1
+GET http://localhost:4000/order/52 HTTP/1.1
 
 ####
 PUT http://localhost:4000/orderForUser/2 HTTP/1.1
