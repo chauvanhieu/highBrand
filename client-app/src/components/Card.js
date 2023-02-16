@@ -13,6 +13,11 @@ function Cards(props) {
     }
     const product = await helper.getProductById(id);
     helper.addToCart(product, JSON.parse(localStorage.getItem("user")).id);
+    document.getElementById(`product-icon-` + props.id).src =
+      "https://media.tenor.com/Ro13gaxiVZAAAAAC/%E6%92%AB%E3%81%A7%E3%82%8B-%E3%83%8F%E3%83%BC%E3%83%88.gif";
+    setTimeout(() => {
+      document.getElementById(`product-icon-` + props.id).src = "";
+    }, 1000);
   }
   return (
     <Card
@@ -30,14 +35,29 @@ function Cards(props) {
             {props.price.toLocaleString()} vnđ
           </Card.Text>
         </Link>
-        <Button
-          onClick={() => {
-            addToCart(props.id);
-          }}
-          variant="primary"
-        >
-          Add to cart +
-        </Button>
+        {JSON.parse(localStorage.getItem("user")) &&
+        JSON.parse(localStorage.getItem("user")).isUsing === 9 ? (
+          <></>
+        ) : (
+          <>
+            <Button
+              onClick={() => {
+                addToCart(props.id);
+              }}
+              variant="primary"
+            >
+              Add to cart +
+            </Button>
+            <span>
+              <img
+                id={`product-icon-` + props.id}
+                style={{ width: 40 }}
+                src=""
+                alt=""
+              />
+            </span>
+          </>
+        )}
       </Card.Body>
     </Card>
   );

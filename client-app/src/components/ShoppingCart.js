@@ -65,7 +65,7 @@ function ShoppingCart() {
   }
 
   async function Buy() {
-    if (cart === null) {
+    if (cart === null || cart.length === 0) {
       setMessage(
         "Bạn chưa có sản phẩm nào trong giỏ hàng! Ghé shop mua vài món nhé ^^"
       );

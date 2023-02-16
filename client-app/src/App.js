@@ -11,6 +11,11 @@ import CartPage from "./Pages/CartPage";
 import ProductCategoryPage from "./Pages/ProductCategoryPage";
 import OrderManagement from "./Pages/OrderManagement";
 import DetailOrderPage from "./Pages/DetailOrderPage";
+import ProductManagement from "./Pages/ProductManagement";
+import EditProductPage from "./Pages/EditProductPage";
+import UserManagement from "./Pages/UserManagement";
+import EditUserPage from "./Pages/EditUserPage";
+import EditAdminPage from "./Pages/EditAdminPage";
 
 function App() {
   return (
@@ -18,13 +23,18 @@ function App() {
       <Routes>
         <Route path="/product/:id" element={<DetailProductPage />} />
         <Route path="/news" element={<NewsPage />} />
-        <Route exact path="/admin/orders" element={<OrderManagement />} />
-        <Route path="/order/:id" element={<DetailOrderPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/category/:idCategory" element={<ProductCategoryPage />} />
-        <Route exact path="/" element={<HomePage />} />
         <Route path="*" element={<PageNotFound />} />
+        <Route exact path="/" element={<HomePage />} />
+        <Route exact path="/admin/orders" element={<OrderManagement />} />
+        <Route exact path="/admin/product" element={<ProductManagement />} />
+        <Route exact path="/admin/users" element={<UserManagement />} />
+        <Route exact path="/admin" element={<EditAdminPage />} />
+        <Route path="/admin/users/:id" element={<EditUserPage />} />
+        <Route path="/admin/product/:id" element={<EditProductPage />} />
+        <Route path="/admin/orders/:id" element={<DetailOrderPage />} />
       </Routes>
     </div>
   );

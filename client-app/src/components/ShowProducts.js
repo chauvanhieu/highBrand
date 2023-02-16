@@ -3,7 +3,7 @@ import Pagination from "react-bootstrap/Pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function ShowProducts() {
+function ShowProducts(props) {
   const [ListProduct, setListProduct] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState();
@@ -22,6 +22,7 @@ function ShowProducts() {
     if (res.status === 200 && res.data) {
       setListProduct(res.data);
     }
+
     const resTotal = await axios.get("http://localhost:4000/total-product");
     setTotal(resTotal.data.total);
   }

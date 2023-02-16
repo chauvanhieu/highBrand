@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 import axios from "axios";
-function Header() {
+function Header(props) {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [category, setCategory] = useState([]);
+  const [keyword, setKeyword] = useState("");
   useEffect(() => {
     getCategory();
   }, []);
@@ -31,10 +34,7 @@ function Header() {
               <Nav.Link>
                 <Link to="/news">Bài viết</Link>
               </Nav.Link>
-              <Nav.Link>
-                <Link to="/product">Sản phẩm</Link>
-              </Nav.Link>
-              <NavDropdown title="Danh mục" id="basic-nav-dropdown">
+              <NavDropdown title="Danh mục sản phẩm" id="basic-nav-dropdown">
                 {category?.map((item) => {
                   return (
                     <div key={item.id}>
@@ -73,7 +73,7 @@ function Header() {
                 </NavDropdown.Item>
                 <NavDropdown.Item>
                   <Link style={{ color: "black" }} to={`/admin/category`}>
-                    Danh mục
+                    Danh mục sản phẩm
                   </Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item>
@@ -82,8 +82,13 @@ function Header() {
                   </Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item>
-                  <Link style={{ color: "black" }} to={`/admin/`}>
+                  <Link style={{ color: "black" }} to={`/admin/users`}>
                     Khách hàng
+                  </Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Link style={{ color: "black" }} to={`/admin/news`}>
+                    Bài viết
                   </Link>
                 </NavDropdown.Item>
               </NavDropdown>
@@ -108,10 +113,8 @@ function Header() {
             <Nav.Link>
               <Link to="/news">Bài viết</Link>
             </Nav.Link>
-            <Nav.Link>
-              <Link to="/product">Sản phẩm</Link>
-            </Nav.Link>
-            <NavDropdown title="Danh mục" id="basic-nav-dropdown">
+
+            <NavDropdown title="Danh mục sản phẩm" id="basic-nav-dropdown">
               {category?.map((item) => {
                 return (
                   <div key={item.id}>

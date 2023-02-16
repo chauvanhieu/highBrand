@@ -71,9 +71,16 @@ function DetailProduct() {
           >
             Giá : {product.price.toLocaleString()} vnđ
           </h3>
-          <button onClick={addToCart} className="btn btn-primary">
-            Thêm vào giỏ hàng
-          </button>
+          {JSON.parse(localStorage.getItem("user")).isUsing === 9 ? (
+            <></>
+          ) : (
+            <>
+              <button onClick={addToCart} className="btn btn-primary">
+                Thêm vào giỏ hàng
+              </button>
+            </>
+          )}
+
           {message ? (
             <Alert
               style={{ width: "15rem", textAlign: "center", marginTop: 10 }}

@@ -14,9 +14,10 @@ import {
 } from "mdb-react-ui-kit";
 import React, { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function OrderDetail() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [order, setOrder] = useState();
   const [isPay, setIsPay] = useState();
@@ -65,7 +66,7 @@ export default function OrderDetail() {
                       <MDBCardBody>
                         {order.details?.map((item, index) => {
                           return (
-                            <MDBRow key={index}>
+                            <MDBRow key={index} className="m-2">
                               <MDBCol md="2">
                                 <MDBCardImage
                                   src={item.image}
@@ -171,6 +172,14 @@ export default function OrderDetail() {
                       tag="h5"
                       className="d-flex align-items-center justify-content-end text-white text-uppercase mb-0"
                     >
+                      <button
+                        onClick={() => {
+                          navigate("/admin/orders");
+                        }}
+                        className="btn btn-info"
+                      >
+                        Back
+                      </button>
                       <span className="h2 mb-0 ms-2">
                         {order.totalPrice.toLocaleString()} vnđ
                       </span>

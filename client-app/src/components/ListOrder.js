@@ -87,7 +87,7 @@ function ListOrder() {
                 <td className="">
                   <button
                     onClick={() => {
-                      navigate("/order/" + item.id);
+                      navigate("/admin/orders/" + item.id);
                     }}
                     className="btn btn-primary mr-2"
                   >

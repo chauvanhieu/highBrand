@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import EditUser from "../components/EditUser";
 import Header from "../components/Header";
-import ListOrder from "../components/ListOrder";
+import { useNavigate } from "react-router-dom";
 
-function OrderManagerment() {
+function EditUserPage() {
   const navigate = useNavigate();
   if (JSON.parse(localStorage.getItem("user")) === null) {
     navigate("/");
@@ -10,9 +10,9 @@ function OrderManagerment() {
   return (
     <>
       <Header />
-      <ListOrder />
+      <EditUser />
     </>
   );
 }
 
-export default OrderManagerment;
+export default EditUserPage;

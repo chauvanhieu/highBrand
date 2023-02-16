@@ -16,12 +16,12 @@ router.get("/:id", function (req, res) {
 
 // GET products
 router.get("/", function (req, res) {
-  let sql = `select *,(select count(*) from products) as total from products`;
+  let sql = `select categoryproduct.name as 'category', products.*,(select count(*) from products) as total from products join categoryProduct on categoryProduct.id=products.idCategory`;
   const keyword = req.query.q;
   const sortColumn = req.query._sort || "id";
   const sortOrder = req.query._order || "asc";
   const page = parseInt(req.query._page) || 1;
-  const limit = parseInt(req.query._limit) || 10;
+  const limit = parseInt(req.query._limit) || 100;
   const offset = (page - 1) * limit;
   if (keyword) {
     sql = `SELECT * FROM products WHERE 
@@ -72,23 +72,7 @@ router.delete("/:id", function (req, res) {
 });
 
 router.put("/:id", function (req, res) {
-  let oldProduct = {};
-  let sqlGetOldProduct = `SELECT * from products where id=${req.params.id}`;
-  con.query(sqlGetOldProduct, function (err, results) {
-    if (err) {
-      return res.send(err);
-    }
-    oldProduct = results[0];
-  });
-  const newProduct = {
-    name: req.body.name || oldProduct.name,
-    price: req.body.price || oldProduct.price,
-    description: req.body.description || oldProduct.description,
-    isUsing: req.body.isUsing || oldProduct.isUsing,
-    idCategory: req.body.idCategory || oldProduct.idCategory,
-    image: req.body.image || oldProduct.image,
-  };
-
+  const newProduct = req.body.product;
   let sql = `UPDATE products SET name='${newProduct.name}',price=${
     newProduct.price
   },image='${newProduct.image}',idCategory=${

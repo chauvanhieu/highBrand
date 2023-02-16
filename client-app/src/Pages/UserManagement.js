@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-import ListOrder from "../components/ListOrder";
+import ListUsers from "../components/ListUsers";
+import { useNavigate } from "react-router-dom";
 
-function OrderManagerment() {
+function UserManagement() {
   const navigate = useNavigate();
   if (JSON.parse(localStorage.getItem("user")) === null) {
     navigate("/");
@@ -10,9 +10,9 @@ function OrderManagerment() {
   return (
     <>
       <Header />
-      <ListOrder />
+      <ListUsers />
     </>
   );
 }
 
-export default OrderManagerment;
+export default UserManagement;

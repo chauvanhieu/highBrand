@@ -3,7 +3,7 @@ const router = express.Router();
 const con = require("../Connection");
 
 router.get("/", function (req, res) {
-  let sql = `select * from usersd`;
+  let sql = `select users.*,(select count(id) from users) as 'total' from users where isUsing != 9`;
   const keyword = req.query.q;
   const sortColumn = req.query._sort || "id";
   const sortOrder = req.query._order || "asc";
@@ -52,31 +52,13 @@ router.delete("/:id", function (req, res) {
 });
 
 router.put("/:id", function (req, res) {
-  let sqlGetUser = `select * from users where id=${req.params.id}`;
-
-  con.query(sqlGetUser, function (err, results) {
+  const newUser = req.body.user;
+  let sqlUpdateUser = `UPDATE users SET username='${newUser.username}',password='${newUser.password}', email='${newUser.email}',soDienThoai='${newUser.soDienThoai}',isUsing=${newUser.isUsing} WHERE id=${req.params.id}`;
+  con.query(sqlUpdateUser, (err, rs) => {
     if (err) {
       return res.send(err);
     }
-    if (results) {
-      const newUser = {
-        id: results[0].id,
-        createdAt: req.body.createdAt || results[0].createdAt,
-        email: req.body.email || results[0].email,
-        gioHangTam: req.body.gioHangTam || results[0].gioHangTam,
-        isusing: req.body.isusing || results[0].isusing,
-        password: req.body.password || results[0].password,
-        soDienThoai: req.body.soDienThoai || results[0].soDienThoai,
-        username: req.body.username || results[0].username,
-      };
-      let sqlUpdateUser = `UPDATE users SET username='${newUser.username}',password='${newUser.password}', email='${newUser.email}',       gioHangTam=${newUser.gioHangTam},soDienThoai='${newUser.soDienThoai}',createdAt='${newUser.createdAt}',isUsing=${newUser.isusing} WHERE id=${req.params.id}`;
-      con.query(sqlUpdateUser, (err, rs) => {
-        if (err) {
-          return res.send(err);
-        }
-        res.json(rs);
-      });
-    }
+    res.json(rs);
   });
 });
 
