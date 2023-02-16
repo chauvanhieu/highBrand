@@ -67,17 +67,17 @@ function Header() {
                 id="basic-nav-dropdown"
               >
                 <NavDropdown.Item>
-                  <Link style={{ color: "black" }} to={`/admin/`}>
+                  <Link style={{ color: "black" }} to={`/admin/product`}>
                     Sản phẩm
                   </Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item>
-                  <Link style={{ color: "black" }} to={`/admin/`}>
+                  <Link style={{ color: "black" }} to={`/admin/category`}>
                     Danh mục
                   </Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item>
-                  <Link style={{ color: "black" }} to={`/admin/`}>
+                  <Link style={{ color: "black" }} to={`/admin/orders`}>
                     Đơn hàng
                   </Link>
                 </NavDropdown.Item>

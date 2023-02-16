@@ -38,23 +38,27 @@ router.post("/", function (req, res) {
   };
 
   let sql = `INSERT INTO orders( iduser, createdAt, totalPrice, isPay) VALUES ('${order.idUser}',now(),${order.totalPrice},0)`;
-  con.query(sql, function (err, results) {
+  con.query(sql, function (err, ketQua) {
     if (err) {
       return res.send(err);
     }
-    res.json(results);
-  });
-
-  if (order.ArrayProduct) {
-    order.ArrayProduct.forEach(function (product) {
-      let sqlInsertDetailOrder = `INSERT INTO orderdetail(idorder, idproduct, quantity, status) VALUES (${order.idUser},${product.id},${product.quantity},1)`;
-      con.query(sqlInsertDetailOrder, (err, results) => {
-        if (err) {
-          return res.send(err.code);
-        }
-      });
+    let sqlClear = `delete from orderdetail where idorder = ${order.idUser}`;
+    con.query(sqlClear, (e, r) => {
+      if (e) {
+        return res.send(e);
+      }
+      if (order.ArrayProduct) {
+        order.ArrayProduct.forEach(function (product) {
+          let sqlInsertDetailOrder = `INSERT INTO orderdetail(idorder, idproduct, quantity, status) VALUES (${ketQua.insertId},${product.id},${product.quantity},1)`;
+          con.query(sqlInsertDetailOrder, (err, results) => {
+            if (err) {
+              return res.send(err.code);
+            }
+          });
+        });
+      }
     });
-  }
+  });
 });
 
 // get order by id
@@ -82,7 +86,6 @@ router.get("/:id", function (req, res) {
       };
 
       let sqlGetDetailOrder = `SELECT products.id,products.name,products.price,products.image,orderdetail.quantity from orderdetail join products on products.id=orderdetail.idproduct WHERE orderdetail.status=1 and orderdetail.idorder = ${idOrder}`;
-      console.log(sqlGetDetailOrder);
       con.query(sqlGetDetailOrder, (err, results) => {
         if (err) {
           return res.send(err);

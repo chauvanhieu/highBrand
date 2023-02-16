@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path="/product/:id" element={<DetailProductPage />} />
         <Route path="/news" element={<NewsPage />} />
-        <Route path="/orders" element={<OrderManagement />} />
+        <Route exact path="/admin/orders" element={<OrderManagement />} />
         <Route path="/order/:id" element={<DetailOrderPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/login" element={<LoginForm />} />

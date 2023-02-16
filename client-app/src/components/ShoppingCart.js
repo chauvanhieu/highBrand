@@ -1,7 +1,12 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import helper from "../utils/helper";
+import Alert from "react-bootstrap/Alert";
+import { useNavigate } from "react-router-dom";
 
 function ShoppingCart() {
+  let navigate = useNavigate();
+  const [message, setMessage] = useState("");
   const [cart, setCart] = useState(
     JSON.parse(localStorage.getItem("shoppingCart"))
   );
@@ -50,11 +55,6 @@ function ShoppingCart() {
     reloadCart();
   }
 
-  // async function setGioHangTam() {
-  //   const iduser = JSON.parse(localStorage.getItem("user")).id;
-  //   helper.setGioHangTam(iduser);
-  // }
-
   useEffect(() => {
     reloadCart();
   }, []);
@@ -62,6 +62,30 @@ function ShoppingCart() {
   function reloadCart() {
     setCart(JSON.parse(localStorage.getItem("shoppingCart")));
     helper.setGioHangTam(JSON.parse(localStorage.getItem("user")).id);
+  }
+
+  async function Buy() {
+    if (cart === null) {
+      setMessage(
+        "Bạn chưa có sản phẩm nào trong giỏ hàng! Ghé shop mua vài món nhé ^^"
+      );
+      return;
+    }
+
+    setMessage(
+      "Gửi đơn hàng thành công. Chúng tôi sẽ liên hệ cho bạn sớm để xác nhận. Xin cảm ơn"
+    );
+    setCart([]);
+    setTimeout(async () => {
+      localStorage.removeItem("shoppingCart");
+      navigate("/");
+      // window.location.assign("/");
+    }, 3000);
+    const res = await axios.post("http://localhost:4000/order", {
+      idUser: JSON.parse(localStorage.getItem("user")).id,
+      totalPrice: totalPrice,
+      ArrayProduct: JSON.parse(localStorage.getItem("shoppingCart")),
+    });
   }
   return (
     <section className="h-100 gradient-custom m-5">
@@ -75,9 +99,9 @@ function ShoppingCart() {
                 </h5>
               </div>
               <div className="card-body">
-                {cart?.map((item) => {
+                {cart?.map((item, index) => {
                   return (
-                    <div className="row" key={item.id}>
+                    <div className="row" key={index}>
                       <div className="col-lg-3 col-md-12 mb-4 mb-lg-0">
                         {/* Image */}
                         <div
@@ -159,9 +183,22 @@ function ShoppingCart() {
                 <button
                   type="button"
                   className="btn btn-primary btn-lg btn-block"
+                  onClick={Buy}
                 >
                   Gửi đơn đặt hàng
                 </button>
+                {!message ? (
+                  <></>
+                ) : (
+                  <>
+                    <Alert className="mt-3">{message}</Alert>
+                    <img
+                      className="container"
+                      src="https://i.pinimg.com/originals/8c/40/05/8c4005377742272315e792545a9c93df.gif"
+                      alt=""
+                    />
+                  </>
+                )}{" "}
               </div>
             </div>
           </div>

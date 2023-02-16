@@ -14,6 +14,7 @@ const orderForUserRouter = require("./routes/orderForUser");
 const categoryRouter = require("./routes/category");
 const orderRouter = require("./routes/order");
 const con = require("./Connection");
+const { json } = require("express");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
@@ -54,6 +55,17 @@ app.get("/total-product", cors(), (req, res) => {
       return res.send(err);
     }
     res.json(rs[0]);
+  });
+});
+
+app.put("/statusorder/:id", cors(), (req, res) => {
+  let isPay = req.body.isPay;
+  let sql = `update orders set isPay = ${isPay} where id = ${req.params.id}`;
+  con.query(sql, (err, rs) => {
+    if (err) {
+      return res.send(err);
+    }
+    res.json(rs);
   });
 });
 app.listen(4000, () => {
