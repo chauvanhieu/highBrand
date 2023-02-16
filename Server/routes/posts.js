@@ -54,8 +54,9 @@ router.post("/", function (req, res) {
   const newPost = {
     title: req.body.title,
     content: req.body.content,
+    image: req.body.image,
   };
-  const sql = `insert into posts (title, content,createdAt,isusing) values ('${newPost.title}', '${newPost.content}', now() , 1)`;
+  const sql = `insert into posts (title, content,image, createdAt,isusing) values ('${newPost.title}', '${newPost.content}',${newPost.image}, now() , 1)`;
   con.query(sql, function (err, results) {
     if (err) {
       return res.send(err);

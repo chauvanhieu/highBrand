@@ -8,7 +8,6 @@ router.get("/:id", function (req, res) {
   let sql = `select * from products where id = ${req.params.id}`;
   con.query(sql, (err, results) => {
     if (err) {
-      console.log(err);
       return res.send(err);
     }
     res.json(results[0]);
@@ -38,7 +37,6 @@ router.get("/", function (req, res) {
   sql += ` ORDER BY ${sortColumn} ${sortOrder} LIMIT ${offset}, ${limit}`;
   con.query(sql, (err, results) => {
     if (err) {
-      console.log(err);
       return res.send(err);
     }
     res.json(results);
@@ -57,7 +55,6 @@ router.post("/", function (req, res) {
 
   con.query(sql, function (err, results) {
     if (err) {
-      console.log(err);
       return res.send(err);
     }
     res.json(results);

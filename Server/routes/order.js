@@ -2,23 +2,6 @@ const express = require("express");
 const router = express.Router();
 const con = require("../Connection");
 
-/*
-Get đơn hàng:
-order.array[]
-{
-    iddonhang:
-    iduser:
-    tổng tiền:
-    trạng thái:
-    createdAt:
-    Array chi tiết đơn hàng:
-        {
-
-        }
-
-}
-*/
-
 router.get("/", function (req, res) {
   const keyword = req.query.q;
   const sortColumn = req.query._sort || "orders.id";
@@ -27,8 +10,8 @@ router.get("/", function (req, res) {
   const limit = parseInt(req.query._limit) || 10;
   const offset = (page - 1) * limit;
 
-  let sql = `select orders.id as 'idOrder',users.sodienthoai as 'phoneNumber', orders.createdAt as 'createdAt',users.username ,users.gioHangTam,users.address,users.email,orders.totalPrice,orders.isPay from orders 
-  join users on users.id=orders.iduser `;
+  let sql = `select  (select count(id) from orders) as 'total' ,orders.id, users.username , users.soDienThoai, users.address , orders.createdAt , orders.totalPrice,orders.isPay from orders 
+join users on orders.iduser=users.id`;
   if (keyword) {
     sql = `select orders.id as 'idOrder',users.sodienthoai as 'phoneNumber', orders.createdAt as 'createdAt',users.username ,users.gioHangTam,users.address,users.email,orders.totalPrice,orders.isPay from orders 
   join users on users.id=orders.iduser WHERE id LIKE '%${keyword}%' or iduser  LIKE '%${keyword}% or createdAt  LIKE '%${keyword}% or totalPrice  LIKE '%${keyword}% or isPay  LIKE '%${keyword}%'`;
@@ -42,6 +25,7 @@ router.get("/", function (req, res) {
     if (err) {
       return res.send(err.code);
     }
+
     res.json(results);
   });
 });
@@ -73,36 +57,6 @@ router.post("/", function (req, res) {
   }
 });
 
-function getOrderById(id) {
-  let order = {};
-  let idOrder = 0;
-  let sql = `SELECT * FROM orders WHERE id=${id}`;
-  con.query(sql, (err, results) => {
-    if (err) {
-      return res.send(err.code);
-    }
-    if (results) {
-      idOrder += results[0].id;
-      order = {
-        id: results[0].id,
-        iduser: results[0].iduser,
-        createdAt: results[0].createdAt,
-        totalPrice: parseInt(results[0].totalPrice),
-        isPay: results[0].isPay === 0 ? false : true,
-        details: [],
-      };
-
-      let sqlGetDetailOrder = `SELECT products.id,products.name,products.price,products.image,orderdetail.quantity from orderdetail join products on products.id=orderdetail.idproduct WHERE orderdetail.idorder = ${idOrder}`;
-      con.query(sqlGetDetailOrder, (err, results) => {
-        if (err) {
-          return res.send(err);
-        }
-        order.details = results;
-        return order;
-      });
-    }
-  });
-}
 // get order by id
 router.get("/:id", function (req, res) {
   let order = {};
@@ -169,4 +123,21 @@ router.put("/:id", function (req, res) {
   // }
 });
 
+router.delete("/:id", (req, res) => {
+  // xóa chi tiết đơn hàng
+  // xóa hóa đơn
+  let sqlXoaChiTiet = `delete from orderdetail where orderdetail.idorder = ${req.params.id} `;
+  let sqlXoaHoaDon = `delete from orders where orders.id = ${req.params.id} `;
+  con.query(sqlXoaChiTiet, (err) => {
+    if (err) {
+      return res.send(err);
+    }
+    con.query(sqlXoaHoaDon, (err) => {
+      if (err) {
+        return res.send(err);
+      }
+      res.json(true);
+    });
+  });
+});
 module.exports = router;

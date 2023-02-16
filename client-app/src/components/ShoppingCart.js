@@ -50,14 +50,15 @@ function ShoppingCart() {
     reloadCart();
   }
 
-  async function setGioHangTam() {
-    const iduser = JSON.parse(localStorage.getItem("user")).id;
-    helper.setGioHangTam(iduser);
-  }
+  // async function setGioHangTam() {
+  //   const iduser = JSON.parse(localStorage.getItem("user")).id;
+  //   helper.setGioHangTam(iduser);
+  // }
 
   useEffect(() => {
     reloadCart();
   }, []);
+
   function reloadCart() {
     setCart(JSON.parse(localStorage.getItem("shoppingCart")));
     helper.setGioHangTam(JSON.parse(localStorage.getItem("user")).id);

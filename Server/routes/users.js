@@ -35,7 +35,6 @@ router.get("/:id", function (req, res) {
 
   con.query(sql, (err, results) => {
     if (err) {
-      console.log(err);
       return res.send(err);
     }
     res.json(results);
@@ -46,7 +45,6 @@ router.delete("/:id", function (req, res) {
   let sql = `update users set isusing=0  where id=${req.params.id}`;
   con.query(sql, function (err, results) {
     if (err) {
-      console.log(err);
       return res.send(err);
     }
     res.json(results);

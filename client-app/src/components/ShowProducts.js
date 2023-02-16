@@ -12,11 +12,13 @@ function ShowProducts() {
     `http://localhost:4000/product?_limit=24&_page=${page}&_sort=createdAt&_order=desc`
   );
   useEffect(() => {
-    getProduct();
-  }, []);
+    getProduct(page);
+  }, [page]);
 
-  async function getProduct() {
-    const res = await axios.get(api);
+  async function getProduct(index) {
+    const res = await axios.get(
+      `http://localhost:4000/product?_limit=24&_page=${index}&_sort=createdAt&_order=desc`
+    );
     if (res.status === 200 && res.data) {
       setListProduct(res.data);
     }
@@ -28,10 +30,6 @@ function ShowProducts() {
       <Pagination.Item
         onClick={() => {
           setPage(number);
-          setApi(
-            `http://localhost:4000/product?_limit=24&_page=${page}&_sort=createdAt&_order=desc`
-          );
-          getProduct();
         }}
         key={number}
         active={number === page}

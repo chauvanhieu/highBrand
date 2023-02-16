@@ -23,13 +23,14 @@ router.put("/:id", (req, res) => {
       return res.status(401).json(err);
     }
     if (gioHang && gioHang.length > 0) {
+      let sqlSetDetail = `insert into orderdetail values`;
       gioHang.forEach((item) => {
-        let sqlSetDetail = `insert into orderdetail values(${id}, ${item.id},${item.quantity},0)`;
-        con.query(sqlSetDetail, (err, rs) => {
-          if (err) {
-            return res.status(401).json(err);
-          }
-        });
+        sqlSetDetail += `(${id}, ${item.id},${item.quantity},0),`;
+      });
+      con.query(sqlSetDetail.slice(0, sqlSetDetail.length - 1), (err, rs) => {
+        if (err) {
+          return res.send(err);
+        }
       });
     }
   });
