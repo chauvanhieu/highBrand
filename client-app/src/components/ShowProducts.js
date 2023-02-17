@@ -39,28 +39,29 @@ function ShowProducts(props) {
       </Pagination.Item>
     );
   }
-  return (
-    <div className=" row mt-4">
-      <h1 className="text-center">TẤT CẢ SẢN PHẨM</h1>
-      {ListProduct?.map((item) => {
-        return (
-          <Cards
-            key={item.id}
-            price={item.price}
-            id={item.id}
-            image={item.image}
-            name={item.name}
-            description={item.description}
-          />
-        );
-      })}
+  if (ListProduct)
+    return (
+      <div className=" row mt-4">
+        <h1 className="text-center">TẤT CẢ SẢN PHẨM</h1>
+        {ListProduct?.map((item) => {
+          return (
+            <Cards
+              key={item.id}
+              price={item.price}
+              id={item.id}
+              image={item.image}
+              name={item.name}
+              description={item.description}
+            />
+          );
+        })}
 
-      <br />
-      <div className="pagination">
-        <Pagination className="item-center">{items}</Pagination>
+        <br />
+        <div className="pagination">
+          <Pagination className="item-center">{items}</Pagination>
+        </div>
       </div>
-    </div>
-  );
+    );
 }
 
 export default ShowProducts;

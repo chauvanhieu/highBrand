@@ -16,6 +16,7 @@ import EditProductPage from "./Pages/EditProductPage";
 import UserManagement from "./Pages/UserManagement";
 import EditUserPage from "./Pages/EditUserPage";
 import EditAdminPage from "./Pages/EditAdminPage";
+import ForgotPassword from "./Pages/ForgotPassword";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route exact path="/admin/product" element={<ProductManagement />} />
         <Route exact path="/admin/users" element={<UserManagement />} />
         <Route exact path="/admin" element={<EditAdminPage />} />
+        <Route exact path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/admin/users/:id" element={<EditUserPage />} />
         <Route path="/admin/product/:id" element={<EditProductPage />} />
         <Route path="/admin/orders/:id" element={<DetailOrderPage />} />

@@ -57,7 +57,6 @@ function LoginForm() {
       return;
     }
     setMessage("");
-
     const user = {
       username: username,
       password: password,
@@ -146,7 +145,7 @@ function LoginForm() {
           />
 
           <div className="d-flex justify-content-between mx-4 mb-4">
-            <Link href="#">Forgot password?</Link>
+            <Link to="/forgot-password">Forgot password?</Link>
           </div>
           <center>
             <button className="btn btn-primary" onClick={handleLoginClick}>
