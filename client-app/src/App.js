@@ -17,6 +17,9 @@ import UserManagement from "./Pages/UserManagement";
 import EditUserPage from "./Pages/EditUserPage";
 import EditAdminPage from "./Pages/EditAdminPage";
 import ForgotPassword from "./Pages/ForgotPassword";
+import ProfilePage from "./Pages/ProfilePage";
+import ControlOrderProfile from "./Pages/ControlOrderProfile";
+import CategoryManagement from "./Pages/CategoryManagement";
 
 function App() {
   return (
@@ -26,11 +29,14 @@ function App() {
         <Route path="/news" element={<NewsPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/order/:id" element={<ControlOrderProfile />} />
         <Route path="/category/:idCategory" element={<ProductCategoryPage />} />
         <Route path="*" element={<PageNotFound />} />
         <Route exact path="/" element={<HomePage />} />
         <Route exact path="/admin/orders" element={<OrderManagement />} />
         <Route exact path="/admin/product" element={<ProductManagement />} />
+        <Route exact path="/admin/category" element={<CategoryManagement />} />
         <Route exact path="/admin/users" element={<UserManagement />} />
         <Route exact path="/admin" element={<EditAdminPage />} />
         <Route exact path="/forgot-password" element={<ForgotPassword />} />

@@ -137,6 +137,9 @@ function Header(props) {
             ) : (
               <>
                 <Nav.Link>
+                  <Link to="/profile">Hồ sơ</Link>
+                </Nav.Link>
+                <Nav.Link>
                   <Link to="/cart">Giỏ hàng</Link>
                 </Nav.Link>
                 <Nav.Link

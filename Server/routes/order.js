@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const con = require("../Connection");
-
+const mailer = require("../MailServer");
 router.get("/", function (req, res) {
   const keyword = req.query.q;
   const sortColumn = req.query._sort || "orders.id";
@@ -16,9 +16,9 @@ join users on orders.iduser=users.id`;
     sql = `select orders.id as 'idOrder',users.sodienthoai as 'phoneNumber', orders.createdAt as 'createdAt',users.username ,users.gioHangTam,users.address,users.email,orders.totalPrice,orders.isPay from orders 
   join users on users.id=orders.iduser WHERE id LIKE '%${keyword}%' or iduser  LIKE '%${keyword}% or createdAt  LIKE '%${keyword}% or totalPrice  LIKE '%${keyword}% or isPay  LIKE '%${keyword}%'`;
   }
-  if (req.query.username) {
+  if (req.query.iduser) {
     sql = `select orders.id as 'idOrder',users.sodienthoai as 'phoneNumber', orders.createdAt as 'createdAt',users.username ,users.gioHangTam,users.address,users.email,orders.totalPrice,orders.isPay from orders 
-    join users on users.id=orders.iduser where iduser = ${req.query.username} `;
+    join users on users.id=orders.iduser where iduser = ${req.query.iduser} `;
   }
   sql += ` ORDER BY ${sortColumn} ${sortOrder} LIMIT ${offset}, ${limit}`;
   con.query(sql, function (err, results) {
@@ -54,6 +54,20 @@ router.post("/", function (req, res) {
             if (err) {
               return res.send(err.code);
             }
+            const mailOptions = {
+              to: "hieucvpk02147@fpt.edu.vn",
+              subject: "Thông báo đơn hàng HighBrand",
+              text: `Bạn vừa có 1 đơn hàng mới từ HighBrand
+              Tổng tiền đơn hàng: ${order.totalPrice.toLocaleString()} vnđ`,
+            };
+            mailer.sendMail(mailOptions, (error, info) => {
+              if (error) {
+                console.log(error);
+                res.status(500).send("Đã xảy ra lỗi khi gửi email.");
+              }
+              con.execute("delete from otpcode where iduser = " + r[0].id);
+              return res.status(200).send({ message: "Thành công" });
+            });
           });
         });
       }

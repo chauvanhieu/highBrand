@@ -7,13 +7,16 @@ router.post("/", (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
   };
-  let sql = `select * from users where email='${account.email}' and password='${account.password}'`;
+  // let sql = `select * from users where email='${account.email}' and password='${account.password}' and (isUsing = 1 or isUsing = 9)`;
+  let sql = `select * from users where email=? and password=? and (isUsing = 1 or isUsing = 9) `;
   let user = null;
-  con.query(sql, (err, results) => {
+  con.query(sql, [account.email, account.password], (err, results) => {
     if (err) {
       res.status(500).json({ message: "error" });
     }
-    user = results[0];
+    if (results) {
+      user = results[0];
+    }
     if (user === null) {
       res.status(401).json({ message: "not found" });
     }

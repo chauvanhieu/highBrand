@@ -44,13 +44,7 @@ router.get("/", function (req, res) {
 });
 
 router.post("/", function (req, res) {
-  const newProduct = {
-    name: req.body.name,
-    price: req.body.price,
-    desciption: req.body.description,
-    idCategory: req.body.idCategory,
-    image: req.body.image,
-  };
+  const newProduct = req.body.product;
   let sql = `INSERT INTO products( name, price, idCategory,image,createdAt,description, isUsing) VALUES( '${newProduct.name}', ${newProduct.price}, ${newProduct.idCategory},'${newProduct.image}', now(),'${newProduct.desciption}', 1)`;
 
   con.query(sql, function (err, results) {

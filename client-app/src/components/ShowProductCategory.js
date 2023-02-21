@@ -1,5 +1,4 @@
 import Cards from "./Card";
-import Pagination from "react-bootstrap/Pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -8,10 +7,12 @@ function ShowProducts() {
   const [ListProduct, setListProduct] = useState([]);
   const { idCategory } = useParams();
   const [category, setCategory] = useState();
+
   useEffect(() => {
     getProduct();
     getCategory();
-  });
+  }, [category]);
+
   async function getCategory() {
     const res = await axios.get(`http://localhost:4000/category/${idCategory}`);
     if (res.status === 200 && res.data) {

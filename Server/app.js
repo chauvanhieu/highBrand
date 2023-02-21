@@ -1,10 +1,13 @@
 const express = require("express");
 const app = express();
 require("express-async-errors");
-
 var cors = require("cors");
-// import router
+const con = require("./Connection");
+const { json } = require("express");
 const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 const loginRouter = require("./routes/login");
 const userRouter = require("./routes/users");
 const productRouter = require("./routes/products");
@@ -14,11 +17,6 @@ const orderForUserRouter = require("./routes/orderForUser");
 const categoryRouter = require("./routes/category");
 const orderRouter = require("./routes/order");
 const forgotPasswordRouter = require("./routes/forgotPassword");
-const con = require("./Connection");
-const { json } = require("express");
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -28,7 +26,6 @@ app.use(function (req, res, next) {
   );
   next();
 });
-//setup router
 
 app.use("/user", cors(), userRouter);
 app.use("/banner", cors(), bannerRouter);
@@ -50,6 +47,7 @@ app.post("/signin", cors(), (req, res) => {
     res.json(user);
   });
 });
+
 app.get("/total-product", cors(), (req, res) => {
   let sql = `SELECT count(*) as 'total' FROM products`;
   con.query(sql, (err, rs) => {
@@ -70,6 +68,7 @@ app.put("/statusorder/:id", cors(), (req, res) => {
     res.json(rs);
   });
 });
+
 app.listen(4000, () => {
   console.log(
     "SERVER ĐANG CHẠY, CHÚC MAY MẮN................................................................"

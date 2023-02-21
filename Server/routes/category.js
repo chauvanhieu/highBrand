@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
 
   const offset = (page - 1) * limit;
 
-  let sql = `SELECT * FROM categoryproduct `;
+  let sql = `SELECT categoryproduct.*,(select count(id) from categoryproduct) as 'total' FROM categoryproduct `;
   if (keyword) {
     sql = `SELECT * FROM categoryproduct WHERE id LIKE '%${keyword}%' or name  LIKE '%${keyword}%'`;
   }
@@ -67,4 +67,20 @@ router.delete("/:id", (req, res) => {
   });
 });
 
+//PUT
+router.put("/:id", (req, res) => {
+  const item = {
+    id: req.params.id,
+    name: req.body.name,
+    isusing: req.body.isusing,
+  };
+  let sql = `update categoryproduct set name='${item.name}' , isusing=${item.isusing} where id=${item.id} `;
+  con.query(sql, function (err, results) {
+    if (err) {
+      console.log(err);
+      return res.send(err.code);
+    }
+    res.json(results);
+  });
+});
 module.exports = router;

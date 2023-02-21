@@ -2,17 +2,7 @@ const express = require("express");
 const router = express.Router();
 const con = require("../Connection");
 const nodemailer = require("nodemailer");
-
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  service: "gmail",
-  secure: true,
-  port: 587,
-  auth: {
-    user: "chauhieu.nina@gmail.com",
-    pass: "qkdkcaiqccrdwntm",
-  },
-});
+const mailer = require("../MailServer");
 
 router.post("/", (req, res) => {
   const email = req.body.email;
@@ -34,7 +24,7 @@ router.post("/", (req, res) => {
       res.status(200).send({ message: "Không tìm thấy tài khoản" });
     } else {
       con.execute(`delete from otpcode where iduser = ${r[0].id}`);
-      transporter.sendMail(mailOptions, (error, info) => {
+      mailer.sendMail(mailOptions, (error, info) => {
         if (error) {
           console.log(error);
           res.status(500).send("Đã xảy ra lỗi khi gửi email.");
@@ -86,7 +76,7 @@ router.put("/:iduser", (req, res) => {
                 Password : ${r[0].password}`,
               };
 
-              transporter.sendMail(mailOptions, (error, info) => {
+              mailer.sendMail(mailOptions, (error, info) => {
                 if (error) {
                   console.log(error);
                   res.status(500).send("Đã xảy ra lỗi khi gửi email.");
