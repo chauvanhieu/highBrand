@@ -16,7 +16,7 @@ router.get("/:id", function (req, res) {
 
 // GET products
 router.get("/", function (req, res) {
-  let sql = `select categoryproduct.name as 'category', products.*,(select count(*) from products) as total from products join categoryProduct on categoryProduct.id=products.idCategory`;
+  let sql = `select categoryproduct.name as 'category', products.*,(select count(*) from products) as total from products join categoryProduct on categoryProduct.id=products.idCategory `;
   const keyword = req.query.q;
   const sortColumn = req.query._sort || "id";
   const sortOrder = req.query._order || "asc";
@@ -45,7 +45,8 @@ router.get("/", function (req, res) {
 
 router.post("/", function (req, res) {
   const newProduct = req.body.product;
-  let sql = `INSERT INTO products( name, price, idCategory,image,createdAt,description, isUsing) VALUES( '${newProduct.name}', ${newProduct.price}, ${newProduct.idCategory},'${newProduct.image}', now(),'${newProduct.desciption}', 1)`;
+  console.log(newProduct);
+  let sql = `INSERT INTO products( name, price, idCategory,image,createdAt,description, isUsing) VALUES( '${newProduct.name}', ${newProduct.price}, ${newProduct.idCategory},'${newProduct.image}', now(),'${newProduct.description}', 1)`;
 
   con.query(sql, function (err, results) {
     if (err) {

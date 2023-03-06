@@ -6,7 +6,7 @@ const mailer = nodemailer.createTransport({
   port: 587,
   auth: {
     user: "chauhieu.nina@gmail.com",
-    pass: "",
+    pass: "wbkdffabbgybbtnn",
   },
 });
 module.exports = mailer;

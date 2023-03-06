@@ -24,11 +24,26 @@ function AdminProduct() {
   const [product, setProduct] = useState({
     name: "",
     price: 0,
-    desciption: "",
+    description: "",
     idCategory: 1,
     image: "",
   });
   async function createProduct() {
+    if (
+      product.name === "" ||
+      product.price === "" ||
+      product.description === "" ||
+      product.image === ""
+    ) {
+      alert("Chưa đầy đủ thông tin của sản phẩm !");
+      return;
+    }
+
+    if (!product.price || product.price === 0) {
+      alert("Giá của sản phẩm không đúng !");
+      return;
+    }
+    console.log(product);
     const res = await axios.post("http://localhost:4000/product/", {
       product: product,
     });
@@ -56,7 +71,7 @@ function AdminProduct() {
       setTotal(res.data[0].total);
     }
   }
-
+  console.log("listProduct", listProduct);
   function onchangeSetProduct(e) {
     setProduct({ ...product, [e.target.name]: e.target.value });
   }

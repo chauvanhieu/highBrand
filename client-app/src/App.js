@@ -20,12 +20,14 @@ import ForgotPassword from "./Pages/ForgotPassword";
 import ProfilePage from "./Pages/ProfilePage";
 import ControlOrderProfile from "./Pages/ControlOrderProfile";
 import CategoryManagement from "./Pages/CategoryManagement";
+import TimKiem from "./Pages/timKiem";
 
 function App() {
   return (
     <div className="App container">
       <Routes>
         <Route path="/product/:id" element={<DetailProductPage />} />
+        <Route path="/product/search/:keyword" element={<TimKiem />} />
         <Route path="/news" element={<NewsPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/login" element={<LoginForm />} />

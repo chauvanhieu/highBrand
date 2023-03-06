@@ -7,7 +7,6 @@ router.post("/", (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
   };
-  // let sql = `select * from users where email='${account.email}' and password='${account.password}' and (isUsing = 1 or isUsing = 9)`;
   let sql = `select * from users where email=? and password=? and (isUsing = 1 or isUsing = 9) `;
   let user = null;
   con.query(sql, [account.email, account.password], (err, results) => {

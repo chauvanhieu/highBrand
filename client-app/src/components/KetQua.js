@@ -2,22 +2,25 @@ import Cards from "./Card";
 import Pagination from "react-bootstrap/Pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
-function ShowProducts(props) {
+function KetQua(props) {
   const [ListProduct, setListProduct] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState();
+  let { keyword } = useParams();
   let items = [];
+  console.log("keyword: " + keyword);
   const [api, setApi] = useState(
-    `http://localhost:4000/product?_limit=24&_page=${page}&_sort=createdAt&_order=desc`
+    `http://localhost:4000/product?q=${keyword}&_limit=24&_page=${page}&_sort=createdAt&_order=desc`
   );
   useEffect(() => {
     getProduct(page);
-  }, [page]);
+  }, [keyword]);
 
   async function getProduct(index) {
     const res = await axios.get(
-      `http://localhost:4000/product?_limit=24&_page=${index}&_sort=createdAt&_order=desc`
+      `http://localhost:4000/product?q=${keyword}&_limit=24&_page=${index}&_sort=createdAt&_order=desc`
     );
     if (res.status === 200 && res.data) {
       setListProduct(res.data);
@@ -66,4 +69,4 @@ function ShowProducts(props) {
     );
 }
 
-export default ShowProducts;
+export default KetQua;

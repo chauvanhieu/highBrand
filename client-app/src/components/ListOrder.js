@@ -17,7 +17,7 @@ function ListOrder() {
 
   async function getOrders(page) {
     const res = await axios.get(
-      `http://localhost:4000/order?_page=${page}&_limit=10&_sort=createdAt&_order=desc`
+      `http://localhost:4000/order?_page=${page}&_limit=10&_sort=isPay&_order=asc`
     );
     setOrders(res.data);
     setTotal(res.data[0].total);

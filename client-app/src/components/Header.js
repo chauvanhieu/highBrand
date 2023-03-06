@@ -5,9 +5,10 @@ import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 function Header(props) {
+  const navigate = useNavigate();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [category, setCategory] = useState([]);
   const [keyword, setKeyword] = useState("");
@@ -36,18 +37,20 @@ function Header(props) {
               </Nav.Link>
               <NavDropdown title="Danh mục sản phẩm" id="basic-nav-dropdown">
                 {category?.map((item) => {
-                  return (
-                    <div key={item.id}>
-                      <NavDropdown.Item>
-                        <Link
-                          style={{ color: "black" }}
-                          to={`/category/${item.id}`}
-                        >
-                          {item.name}
-                        </Link>
-                      </NavDropdown.Item>
-                    </div>
-                  );
+                  if (item.isusing === 1) {
+                    return (
+                      <div key={item.id}>
+                        <NavDropdown.Item>
+                          <Link
+                            style={{ color: "black" }}
+                            to={`/category/${item.id}`}
+                          >
+                            {item.name}
+                          </Link>
+                        </NavDropdown.Item>
+                      </div>
+                    );
+                  }
                 })}
               </NavDropdown>
 
@@ -92,6 +95,19 @@ function Header(props) {
                   </Link>
                 </NavDropdown.Item>
               </NavDropdown>
+
+              <input id="keyword" type="text" />
+              <button
+                onClick={() => {
+                  navigate(
+                    "/product/search/" +
+                      document.getElementById("keyword").value
+                  );
+                }}
+                className="btn btn-primary"
+              >
+                Tìm kiếm
+              </button>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -152,6 +168,17 @@ function Header(props) {
                 </Nav.Link>
               </>
             )}
+            <input id="keyword" type="text" />
+            <button
+              onClick={() => {
+                navigate(
+                  "/product/search/" + document.getElementById("keyword").value
+                );
+              }}
+              className="btn btn-primary"
+            >
+              Tìm kiếm
+            </button>
           </Nav>
         </Navbar.Collapse>
       </Container>

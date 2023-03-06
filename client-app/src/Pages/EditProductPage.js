@@ -1,12 +1,18 @@
 import EditProduct from "../components/EditProduct";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function EditProductPage() {
   const navigate = useNavigate();
-  if (JSON.parse(localStorage.getItem("user")) === null) {
-    navigate("/");
-  }
+  useEffect(() => {
+    if (
+      JSON.parse(localStorage.getItem("user")) === null ||
+      JSON.parse(localStorage.getItem("user")).isUsing !== 9
+    ) {
+      navigate("/");
+    }
+  });
   return (
     <>
       <Header />

@@ -1,6 +1,6 @@
 
 
-GET http://localhost:4000/category?_page=1&_limit=10&_sort=id&_order=desc HTTP/1.1
+GET http://localhost:4000/product?q=hiệu&_limit=24&_page=1&_sort=createdAt&_order=desc HTTP/1.1
 
 ####
 PUT http://localhost:4000/orderForUser/2 HTTP/1.1
